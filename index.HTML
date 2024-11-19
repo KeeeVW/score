@@ -21,7 +21,8 @@
             padding: 30px;
             border-radius: 10px;
             box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-            width: 300px;
+            width: 90%;
+            max-width: 300px;
             text-align: center;
             color: #333;
             transition: opacity 1s ease, transform 1s ease;
@@ -37,6 +38,7 @@
         .login-container h1 {
             margin-bottom: 20px;
             color: #4CAF50;
+            font-size: 24px;
         }
     
         .login-container input {
@@ -56,6 +58,7 @@
             font-size: 16px;
             border-radius: 5px;
             cursor: pointer;
+            width: 100%;
         }
     
         .login-container button:hover {
@@ -80,7 +83,7 @@
         }
     
         .welcome-screen img {
-            width:100%;
+            width: 90%; /* Default for smaller screens */
             max-width: 500px;
             opacity:1;
     }
@@ -88,7 +91,7 @@
         .welcome-message {
         position: absolute;
         bottom: 20px; /* Adjust this value to control the distance from the bottom */
-        left: 35%;
+        left: 50%;
         transform: translateX(-50%); /* This centers the message horizontally */
         font-size: 46px;
         font-weight: bold;
@@ -97,7 +100,23 @@
         color: #033b05;
     }
 
-            
+    @media (min-width: 768px) {
+        .login-container {
+            width: 400px; /* Slightly larger for tablets and desktops */
+        }
+
+        .login-container h1 {
+            font-size: 28px;
+        }
+
+        .login-container button {
+            font-size: 18px;
+        }
+
+        .welcome-message {
+            font-size: 46px; /* Larger welcome message on bigger screens */
+        }
+    }   
         
     
         @keyframes fade-in {
