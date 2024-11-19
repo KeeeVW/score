@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom right, #4CAF50, #2F4F4F);
+            margin: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+    
+        .login-container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            width: 300px;
+            text-align: center;
+            color: #333;
+            transition: opacity 1s ease, transform 1s ease;
+            z-index: 2; /* Ensure it's above other elements */
+        }
+    
+        .login-container.hidden {
+            opacity: 0;
+            transform: translateY(-50%);
+            pointer-events: none; /* Apply only after hiding */
+        }
+    
+        .login-container h1 {
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+    
+        .login-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+    
+        .login-container button {
+            padding: 10px 20px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    
+        .login-container button:hover {
+            background-color: #45a049;
+        }
+    
+        .welcome-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgb(255, 255, 255);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 1s ease;
+        }
+    
+        .welcome-screen img {
+            width:100%;
+            max-width: 500px;
+            opacity:1;
+    }
+    
+        .welcome-message {
+        position: absolute;
+        bottom: 20px; /* Adjust this value to control the distance from the bottom */
+        left: 35%;
+        transform: translateX(-50%); /* This centers the message horizontally */
+        font-size: 46px;
+        font-weight: bold;
+        text-align: center;
+        animation: fade-in 2s ease forwards;
+        color: #033b05;
+    }
+
+            
+        
+    
+        @keyframes fade-in {
+            0% {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+    </style>
+    
+</head>
+<body>
+    <div class="login-container" id="login-container">
+        <h1>Login</h1>
+        <form id="login-form">
+            <input type="text" id="username" placeholder="Username" required>
+            <input type="password" id="password" placeholder="Password" required>
+            <button type="submit">Login</button>
+            <p id="error-message" class="error" style="color: red;"></p>
+        </form>
+    </div>
+
+    <div class="welcome-screen" id="welcome-screen">
+        <div class="welcome-message" id="welcome-message"></div>
+        <img id="welcome-image" src="" alt="Welcome Image">
+    </div>
+
+    <script>
+        const validUsers = [
+            { username: "asad", password: "asad2", message: "Welcome Lion Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1774.jpeg" },
+            { username: "deeb", password: "deeb3", message: "Welcome Wolf Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1776.jpeg" },
+            { username: "toor", password: "toor1", message: "Welcome Bull Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1779.jpeg" },
+            { username: "sa2r", password: "sa2r5", message: "Welcome Falcon Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1777.jpeg" },
+            { username: "fahd", password: "fahd4", message: "Welcome Cheetah Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1775.png" },
+            { username: "cupra", password: "cupra6", message: "Welcome Cupra Patrol", image: "https://raw.githubusercontent.com/KeeeVW/Score-pics/refs/heads/main/IMG_1778.jpeg" }
+        ];
+
+        function validateLogin(event) {
+            event.preventDefault(); // Prevent form submission
+            const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
+            const errorMessage = document.getElementById("error-message");
+
+            const user = validUsers.find(user => user.username === username && user.password === password);
+
+            if (user) {
+                errorMessage.textContent = "";
+                showWelcomeScreen(user);
+            } else {
+                errorMessage.textContent = "Invalid username or password!";
+            }
+        }
+
+        function showWelcomeScreen(user) {
+            const loginContainer = document.getElementById("login-container");
+            const welcomeScreen = document.getElementById("welcome-screen");
+            const welcomeMessage = document.getElementById("welcome-message");
+            const welcomeImage = document.getElementById("welcome-image");
+
+            // Hide login container
+            loginContainer.classList.add("hidden");
+
+            // Set welcome screen content
+            welcomeMessage.textContent = user.message;
+            welcomeImage.src = user.image;
+
+            // Show welcome screen
+            setTimeout(() => {
+                welcomeScreen.style.opacity = 1;
+
+                // Hide welcome screen and transition to dashboard after 3 seconds
+                setTimeout(() => {
+                    welcomeScreen.style.opacity = 0;
+                    setTimeout(() => {
+                        window.location.href = "DashboardPage.html";
+                    }, 1000);
+                }, 3000);
+            }, 1000);
+        }
+
+        document.getElementById("login-form").addEventListener("submit", validateLogin);
+    </script>
+</body>
+</html>
